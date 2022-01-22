@@ -1,3 +1,4 @@
+import os
 class Snake:
     def __init__(self):
         self.score = 0
@@ -25,17 +26,46 @@ class Snake:
                         ["~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
                         ["~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
                         ["~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~", "~"]]
-        self.snake = "="
+        self.snakeHead = ">"
         self.snakePos = [0,5]
+        self.currDir = "d"
     
     def printMap(self):
         for i in range(len(self.gameMap)):
             for j in range(len(self.gameMap[i])):
                 if i == self.snakePos[0] and j == self.snakePos[1]:
-                    print(self.snake, end=" ", flush=True)
+                    print(self.snakeHead, end=" ", flush=True)
                 else:
                     print(self.gameMap[i][j], end = " ", flush=True)
             print()
+    
+    def move(self, direction):
+        if direction == "w":
+            self.snakePos[0] -= 1
+            self.snakeHead = "^"
+            self.currDir = "w"
+        elif direction == "s":
+            self.snakePos[0] += 1
+            self.snakeHead = "v"
+            self.currDir = "s"
+        elif direction == "a":
+            self.snakePos[1] -= 1
+            self.snakeHead = "<"
+            self.currDir = "a"
+        elif direction == "d":
+            self.snakePos[1] += 1
+            self.snakeHead = ">"
+            self.currDir = "d"
+        else:
+            print("Invalid direction")
+    
+    def playGame(self):
+        while(not self.gameOver):
+            os.system("printf '\33c\e[3J'")
+            self.printMap()
+            print(self.score)
+            move = input()
+            self.move(move)
 
 mySnake = Snake()
-mySnake.printMap()
+mySnake.playGame()
