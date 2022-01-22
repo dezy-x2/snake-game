@@ -1,4 +1,5 @@
 import os
+import signal
 class Snake:
     def __init__(self):
         self.score = 0
@@ -29,6 +30,25 @@ class Snake:
         self.snakeHead = ">"
         self.snakePos = [0,5]
         self.currDir = "d"
+
+    class AlarmException(Exception):
+        pass
+
+
+    def alarmHandler(signum, frame):
+        raise AlarmException
+
+
+    def timedInput(prompt='', timeout=20):
+        signal.signal(signal.SIGALRM, alarmHandler)
+        signal.alarm(timeout)
+        try:
+            text = input(prompt)
+            signal.alarm(0)
+            return text
+        except AlarmException:
+            pass
+        signal.signal(signal.SIGALRM, signal.SIG_IGN)
     
     def printMap(self):
         for i in range(len(self.gameMap)):
