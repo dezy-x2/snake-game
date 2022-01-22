@@ -1,5 +1,8 @@
 import os
 import signal
+
+class AlarmException(Exception):
+    pass
 class Snake:
     def __init__(self):
         self.score = 0
@@ -31,16 +34,13 @@ class Snake:
         self.snakePos = [0,5]
         self.currDir = "d"
 
-    class AlarmException(Exception):
-        pass
 
-
-    def alarmHandler(signum, frame):
+    def alarmHandler(self, signum, frame):
         raise AlarmException
 
 
-    def timedInput(prompt='', timeout=20):
-        signal.signal(signal.SIGALRM, alarmHandler)
+    def timedInput(self, prompt='', timeout=20):
+        signal.signal(signal.SIGALRM, self.alarmHandler)
         signal.alarm(timeout)
         try:
             text = input(prompt)
