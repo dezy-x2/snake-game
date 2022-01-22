@@ -49,6 +49,7 @@ class Snake:
         except AlarmException:
             pass
         signal.signal(signal.SIGALRM, signal.SIG_IGN)
+        return self.currDir
     
     def printMap(self):
         for i in range(len(self.gameMap)):
@@ -84,7 +85,7 @@ class Snake:
             os.system("printf '\33c\e[3J'")
             self.printMap()
             print(self.score)
-            move = input()
+            move = self.timedInput(timeout=1)
             self.move(move)
 
 mySnake = Snake()
