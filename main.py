@@ -33,6 +33,7 @@ class Snake:
         self.snakeHead = ">"
         self.snakePos = [0,5]
         self.currDir = "d"
+        self.applePos = [6,8]
 
 
     def alarmHandler(self, signum, frame):
@@ -56,24 +57,26 @@ class Snake:
             for j in range(len(self.gameMap[i])):
                 if i == self.snakePos[0] and j == self.snakePos[1]:
                     print(self.snakeHead, end=" ", flush=True)
+                elif i == self.applePos[0] and j == self.applePos[1]:
+                    print("o", end=" ", flush=True)
                 else:
                     print(self.gameMap[i][j], end = " ", flush=True)
             print()
     
     def move(self, direction):
-        if direction == "w":
+        if direction == "w" and self.currDir != "s":
             self.snakePos[0] -= 1
             self.snakeHead = "^"
             self.currDir = "w"
-        elif direction == "s":
+        elif direction == "s" and self.currDir != "w":
             self.snakePos[0] += 1
             self.snakeHead = "v"
             self.currDir = "s"
-        elif direction == "a":
+        elif direction == "a" and self.currDir != "d":
             self.snakePos[1] -= 1
             self.snakeHead = "<"
             self.currDir = "a"
-        elif direction == "d":
+        elif direction == "d" and self.currDir != "a":
             self.snakePos[1] += 1
             self.snakeHead = ">"
             self.currDir = "d"
