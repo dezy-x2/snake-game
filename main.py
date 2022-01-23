@@ -99,6 +99,15 @@ class Snake:
                 self.applePos = [x,y]
                 break
     
+    def detectEdgeCollision(self):
+        if self.snakePos[0] > (len(self.gameMap) -1) or self.snakePos[0] < 0 or self.snakePos[1] > (len(self.gameMap[0]) -1) or self.snakePos[1] < 0:
+            return True
+        return False
+    
+    def detectCollision(self):
+        if self.detectEdgeCollision():
+            self.gameOver = True
+    
     def playGame(self):
         while(not self.gameOver):
             os.system("printf '\33c\e[3J'")
@@ -107,6 +116,8 @@ class Snake:
             print(self.score)
             move = self.timedInput(timeout=1)
             self.move(move)
+            self.detectCollision()
+        print("Game Over")
 
 mySnake = Snake()
 mySnake.playGame()
