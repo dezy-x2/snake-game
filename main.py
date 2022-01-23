@@ -1,5 +1,6 @@
 import os
 import signal
+import random
 
 class AlarmException(Exception):
     pass
@@ -34,6 +35,7 @@ class Snake:
         self.snakePos = [0,5]
         self.currDir = "d"
         self.applePos = [6,8]
+        self.appleEaten = False
 
 
     def alarmHandler(self, signum, frame):
@@ -83,9 +85,24 @@ class Snake:
         else:
             print("Invalid direction")
     
+    def checkForApple(self):
+        if self.snakePos[0] == self.applePos[0] and self.snakePos[1] == self.applePos[1]:
+            self.appleEaten = True
+            self.score += 1
+            self.placeApple()
+    
+    def placeApple(self):
+        while True:
+            x = random.randint(0, len(self.gameMap)-1)
+            y = random.randint(0, len(self.gameMap[0])-1)
+            if self.gameMap[x][y] == "~":
+                self.applePos = [x,y]
+                break
+    
     def playGame(self):
         while(not self.gameOver):
             os.system("printf '\33c\e[3J'")
+            self.checkForApple()
             self.printMap()
             print(self.score)
             move = self.timedInput(timeout=1)
