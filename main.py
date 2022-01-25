@@ -83,7 +83,7 @@ class Snake:
             self.snakeHead = ">"
             self.currDir = "d"
         else:
-            print("Invalid direction")
+            self.move(self.currDir)
     
     def checkForApple(self):
         if self.snakePos[0] == self.applePos[0] and self.snakePos[1] == self.applePos[1]:
