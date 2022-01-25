@@ -58,11 +58,11 @@ class Snake:
         for i in range(len(self.gameMap)):
             for j in range(len(self.gameMap[i])):
                 if i == self.snakePos[0] and j == self.snakePos[1]:
-                    print(self.snakeHead, end=" ", flush=True)
+                    print(f"\033[1;32;40m{self.snakeHead}", end=" ", flush=True)
                 elif i == self.applePos[0] and j == self.applePos[1]:
-                    print("o", end=" ", flush=True)
+                    print("\033[1;31;40mo", end=" ", flush=True)
                 else:
-                    print(self.gameMap[i][j], end = " ", flush=True)
+                    print(f"\033[1;37;40m{self.gameMap[i][j]}", end = " ", flush=True)
             print()
     
     def move(self, direction):
@@ -117,7 +117,7 @@ class Snake:
             move = self.timedInput(timeout=1)
             self.move(move)
             self.detectCollision()
-        print("Game Over")
+        print("\033[1;31;40mGame Over")
 
 mySnake = Snake()
 mySnake.playGame()
