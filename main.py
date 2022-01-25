@@ -95,7 +95,7 @@ class Snake:
         while True:
             x = random.randint(0, len(self.gameMap)-1)
             y = random.randint(0, len(self.gameMap[0])-1)
-            if self.gameMap[x][y] == "~":
+            if x != self.snakePos[0] and y != self.snakePos[1]:
                 self.applePos = [x,y]
                 break
     
